@@ -6,24 +6,40 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>CF429B1A-00E8-4FFD-9669-B9FF1C82AD43</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FranksLeapMusic</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>65AEE5A1BAEF93373D8726D28DDD6A73508EE318</key>
+		<string>https://github.com/fluxaxiom/LeapMusicBox.git</string>
 		<key>ED76853E2B35CA572D965A37CB2B34326D97D520</key>
 		<string>https://github.com/fluxaxiom/ofxLeapMotion2.git</string>
 	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FranksLeapMusic.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>65AEE5A1BAEF93373D8726D28DDD6A73508EE318</key>
+		<string>../..</string>
 		<key>ED76853E2B35CA572D965A37CB2B34326D97D520</key>
-		<string>ofxLeapMotion2</string>
+		<string>../../../ofxLeapMotion2</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/fluxaxiom/ofxLeapMotion2.git</string>
+	<string>https://github.com/fluxaxiom/LeapMusicBox.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>ED76853E2B35CA572D965A37CB2B34326D97D520</string>
+	<string>65AEE5A1BAEF93373D8726D28DDD6A73508EE318</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>65AEE5A1BAEF93373D8726D28DDD6A73508EE318</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LeapMusicBox</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

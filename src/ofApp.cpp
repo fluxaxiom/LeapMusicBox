@@ -15,16 +15,16 @@ void ofApp::setup(){
     glEnable(GL_NORMALIZE);
     
     drums1.loadSound("sounds/Drums 01.mp3");
-    drums2.loadSound("sounds/Drums 02.mp3");
-    drums3.loadSound("sounds/Drums 03.mp3");
+    //drums2.loadSound("sounds/Drums 02.mp3");
+    //drums3.loadSound("sounds/Drums 03.mp3");
     snare1.loadSound("sounds/Snare 01.mp3");
-    snare2.loadSound("sounds/Snare 02.mp3");
-    snare3.loadSound("sounds/Snare 03.mp3");
-    snare4.loadSound("sounds/Snare 04.mp3");
-    snare5.loadSound("sounds/Snare 05.mp3");
+    //snare2.loadSound("sounds/Snare 02.mp3");
+    //snare3.loadSound("sounds/Snare 03.mp3");
+    //snare4.loadSound("sounds/Snare 04.mp3");
+    //snare5.loadSound("sounds/Snare 05.mp3");
     kick1.loadSound("sounds/Kick 01.mp3");
-    kick2.loadSound("sounds/Kick 02.mp3");
-    kick3.loadSound("sounds/Kick 03.mp3");
+    //kick2.loadSound("sounds/Kick 02.mp3");
+    //kick3.loadSound("sounds/Kick 03.mp3");
     crash.loadSound("sounds/Crash.mp3");
     bass.loadSound("sounds/Bass.mp3");
     synth.loadSound("sounds/Synth.mp3");
@@ -60,6 +60,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    //simplehands method taken from ofxleapmotion2 repository
     
     fingersFound.clear();
     
@@ -101,6 +103,7 @@ void ofApp::draw(){
     if (leap.isConnected()){
         ofSetColor(0,200,0);
         ofDrawBitmapString("Frank's Leap Music\nLeap Connected ", 20, 20);
+        ofSetColor(200, 200, 200);
         ofDrawBitmapString("To change sounds use keyboard\nKick: 1 2 3\nSnare: Q W E R T\nDrumloop: A S D\nKill Loop: Z\nToggle BPM mode: X", 20,60);
 
     }
@@ -122,53 +125,68 @@ void ofApp::draw(){
         ofPoint handPos    = simpleHands[i].handPos;
         ofPoint handNormal = simpleHands[i].handNormal;
         
+        ofSetColor(200, 200, 200);
         if (isLeft){
-            if (synth.getIsPlaying()){
-                synthImage.draw(-1000,200,-2000);
-                ofSetColor(100, 0, 0);
-            }
-            else{
-                ofSetColor(0, 0, 100);
-                synthImage.draw(-1000,200,-2100);
-            }
+
             if (handPos.z<0){
-                ofSetColor(200, 200, 200);
                 kickImage.draw(-400, -200,-100);
             }
             if (handPos.z>0){
                 kickImage.draw(-500, -200, -200);
             }
+            if (synth.getIsPlaying()){
+                synthImage.draw(-1000,200,-2000);
+            }
+            else{
+                synthImage.draw(-1000,200,-2100);
+            }
+            
+            if (handPos.z<0){
+                ofSetColor(200, 200, 200);
+            }
+            if (handPos.z>0){
+                ofSetColor(100, 100, 100);
+            }
+            if (synth.getIsPlaying()){
+                ofSetColor(0, 0, 200);
+            }
+            
+            ofDrawSphere(handPos.x, handPos.y, handPos.z, 20);
         }
         else{
             if (sax.getIsPlaying()){
                 saxImage.draw(-1000,-5000,-4000);
-                ofSetColor(0, 0, 200);
             }
-            else{
-                ofSetColor(100, 100, 100);
-            }
-            if (handPos.y>-50){
+            if (handPos.y>0){
                 if (handPos.z<0){
-                    ofSetColor(200, 200, 200);
-                    cymbalImage.draw(400, -1000,-1900);
+                    cymbalImage.draw(400, -500,-1900);
                 }
                 if (handPos.z>0){
-                    cymbalImage.draw(400, -1000,-2000);
+                    cymbalImage.draw(400, -500,-2000);
                 }
             }
             if (handPos.y<-50){
                 if (handPos.z<0){
-                    ofSetColor(200, 200, 200);
                     snareImage.draw(400,-1500,-1400);
                 }
                 if (handPos.z>0){
                     snareImage.draw(400,-1500,-1500);
                 }
             }
-
+            
+            if (handPos.z<0){
+                ofSetColor(200, 200, 200);
+            }
+            if (handPos.z>0){
+                ofSetColor(100, 100, 100);
+            }
+            if (sax.getIsPlaying()){
+                ofSetColor(0, 0, 200);
+            }
+            
+            ofDrawSphere(handPos.x, handPos.y, handPos.z, 20);
         }
         
-        ofDrawSphere(handPos.x, handPos.y, handPos.z, 20);
         ofSetColor(handPos.x, handPos.y, handPos.z);
         ofDrawArrow(handPos, handPos + 100*handNormal);
         
@@ -188,7 +206,7 @@ void ofApp::draw(){
                 ofSetColor(handPos.x,handPos.z,handPos.x*(-1.0));
             }
             else{
-                ofSetColor(handPos.y, handPos.y*(-1.0), handPos.z);
+                ofSetColor(handPos.y, (BPMswitch)*handPos.y*(-1.0), handPos.z);
             }
             ofSetLineWidth(5);
             ofLine(mcp.x, mcp.y, mcp.z, pip.x, pip.y, pip.z);
@@ -209,7 +227,7 @@ void ofApp::draw(){
             if (handPos.x<-50){
                 sax.play();
             }
-            if (handPos.y>-50){
+            if (handPos.y>0){
                 if (handPos.z>0){
                     crash.play();
                 }
@@ -223,13 +241,8 @@ void ofApp::draw(){
   
         // left hand
         if (isLeft){
-            if (handPos.x>0&&handPos.y<0){
-                drums1.stop();
-                bass.stop();
-                drumkitImage.clear();
-            }
             if (!drums1.getIsPlaying()){
-                if (handPos.x>0){
+                if (handPos.x>50&&handPos.y<0){
                     drums1.play();
                     bass.play();
                 }
@@ -256,7 +269,7 @@ void ofApp::draw(){
 
         if (drums1.getIsPlaying()){
             ofSetColor(200,200,200);
-            drumkitImage.draw(100,100,0);
+            drumkitImage.draw(650,-800,-500);
         }
         
  //debug stringouts
@@ -284,6 +297,8 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    
+    //Keyboard menu
     
     if (key=='1'){
         kick1.loadSound("sounds/Kick 01.mp3");
@@ -322,8 +337,8 @@ void ofApp::keyPressed(int key){
         bass.loadSound("sounds/Bass.mp3");
     }
     if (key=='z'){
-        drums1.loadSound("sounds/Drums 01.mp3");
-        bass.loadSound("sounds/Bass.mp3");
+        drums1.stop();
+        bass.stop();
     }
     if (key=='x'){
         if (BPMswitch){
